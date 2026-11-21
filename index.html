@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF9F6">
+<meta name="description" content="PRECIOS OUTFIT: accesos directos a las principales tiendas de ropa en línea de Costa Rica.">
+<title>PRECIOS OUTFIT</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='85' font-family='Georgia,serif' fill='%23141413'%3EO%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #FAF9F6;
+    --white-broken: #FDFCFA;
+    --charcoal: #141413;
+    --slate: #4A4F57;
+    --muted: #7A7B78;
+    --line: rgba(20, 20, 19, 0.14);
+    --accent: #A38B5E;
+    --serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    padding-top: calc(34px + env(safe-area-inset-top, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- News ticker ---------- */
+  .ticker {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: calc(34px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    background: var(--charcoal);
+    color: var(--ivory);
+    overflow: hidden;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation: tick 70s linear infinite;
+  }
+  .ticker:hover .track { animation-play-state: paused; }
+  .group { display: flex; flex-shrink: 0; }
+  .tick-item {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0 28px;
+  }
+  .sep { font-style: normal; color: var(--accent); margin-left: 56px; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+
+  /* ---------- Header ---------- */
+  header {
+    padding: 56px 22px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 30px;
+    text-align: center;
+  }
+  .brand { text-align: center; }
+  .eyebrow {
+    display: block;
+    font-size: 0.66rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 7vw, 3.4rem);
+    letter-spacing: 0.2em;
+    line-height: 1.05;
+  }
+  .brand .sub {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+  .clock-wrap {
+    width: clamp(150px, 40vw, 196px);
+    aspect-ratio: 1;
+    position: relative;
+  }
+  .clock-wrap svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .quote {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 3.4vw, 1.3rem);
+    line-height: 1.45;
+    color: var(--slate);
+  }
+  .quote-label {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  @media (min-width: 860px) {
+    .hero {
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-areas: "quote brand clock";
+      text-align: left;
+      gap: 40px;
+    }
+    .quote { grid-area: quote; justify-self: start; }
+    .brand { grid-area: brand; }
+    .clock-wrap { grid-area: clock; justify-self: end; }
+  }
+
+  /* ---------- Main sections ---------- */
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 22px 24px;
+  }
+  section + section { margin-top: 64px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-size: 0.66rem;
+    letter-spacing: 0.26em;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(1.45rem, 4.4vw, 1.9rem);
+    white-space: nowrap;
+  }
+  .section-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--charcoal);
+    opacity: 0.22;
+    align-self: center;
+    transform: translateY(-4px);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 560px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ---------- Store cards ---------- */
+  .card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 128px;
+    padding: 26px 24px;
+    background: var(--white-broken);
+    color: var(--charcoal);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.45s var(--ease), color 0.45s var(--ease), transform 0.25s var(--ease);
+    isolation: isolate;
+  }
+  .card:hover { background: var(--charcoal); color: var(--ivory); }
+  .card:active { transform: scale(0.985); }
+  .card:focus-visible { outline: 1px solid var(--accent); outline-offset: -6px; }
+
+  .card .name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-right: 28px;
+  }
+  .card .slogan {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    color: var(--slate);
+    transition: color 0.45s var(--ease);
+  }
+  .card:hover .slogan { color: rgba(250, 249, 246, 0.78); }
+  .card .arrow {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--accent);
+    transition: transform 0.45s var(--ease);
+  }
+  .card:hover .arrow { transform: translate(3px, -3px); }
+
+  /* ---------- Ripple ---------- */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.16;
+    transform: scale(0);
+    pointer-events: none;
+    animation: ripple 0.75s var(--ease) forwards;
+    z-index: 0;
+  }
+  @keyframes ripple {
+    to { transform: scale(1); opacity: 0; }
+  }
+  .card > * { position: relative; z-index: 1; }
+  .card > .arrow { position: absolute; z-index: 1; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    text-align: center;
+    padding: 40px 20px calc(44px + env(safe-area-inset-bottom, 0px));
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+  footer .mark {
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 16px;
+  }
+
+  /* ---------- Follow dot (desktop with fine pointer only) ---------- */
+  .dot {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease, scale 0.35s var(--ease), background-color 0.3s ease;
+    will-change: transform;
+  }
+  body.has-dot .dot { display: block; }
+  .dot.is-active { scale: 3.2; background: var(--charcoal); opacity: 0.35; }
+
+  /* ---------- Entrance ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: rise 0.9s var(--ease) forwards;
+  }
+  .reveal.d1 { animation-delay: 0.08s; }
+  .reveal.d2 { animation-delay: 0.18s; }
+  .reveal.d3 { animation-delay: 0.28s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .track { animation: none; }
+    .dot { display: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="ticker" role="marquee" aria-label="Avisos">
+    <div class="track" id="track"></div>
+  </div>
+
+  <header>
+    <div class="hero">
+      <div class="brand reveal">
+        <span class="eyebrow">Costa Rica · Moda en colones</span>
+        <h1>PRECIOS OUTFIT</h1>
+        <span class="sub">Tu guía de tiendas en línea</span>
+      </div>
+
+      <div class="clock-wrap reveal d1" id="clock" aria-label="Reloj analógico" role="img"></div>
+
+      <p class="quote reveal d2" id="quote">
+        <span class="quote-label">Frase del día</span>
+        <span id="quoteText"></span>
+      </p>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer>
+    <span class="mark"></span>
+    PRECIOS OUTFIT 2026 by Cristian Sandi
+  </footer>
+
+  <div class="dot" id="dot" aria-hidden="true"></div>
+
+<script>
+  /* ---------- Datos ---------- */
+  const TICKER = [
+    "Precios en colones (₡) · Revisa siempre el sitio oficial de cada tienda",
+    "Actualización de precios: consulta promociones y liquidaciones antes de comprar",
+    "Temporada nueva cada semana en tiendas de fast fashion",
+    "Básicos y clásicos: la inversión que más dura",
+    "Compara tallas, materiales y envíos a Costa Rica",
+    "Departamentales: ofertas y marcas en un solo lugar"
+  ];
+
+  const SECTIONS = [
+    {
+      title: "Fast Fashion & Tendencias",
+      grid: "grid-3",
+      stores: [
+        { name: "Zara CR", url: "https://www.zara.com/cr/es/", slogan: "Inspired by you" },
+        { name: "Pull&Bear CR", url: "https://www.pullandbear.com/cr/", slogan: "Dare to be" },
+        { name: "Bershka CR", url: "https://www.bershka.com/cr/", slogan: "Be Bershka" },
+        { name: "Stradivarius CR", url: "https://www.stradivarius.com/cr/", slogan: "Dress your mood" },
+        { name: "H&M CR", url: "https://www2.hm.com/es_cr/", slogan: "Fashion and quality at the best price" },
+        { name: "Mango CR", url: "https://shop.mango.com/cr/", slogan: "Mango, moda para ti" }
+      ]
+    },
+    {
+      title: "Básicos & Clásicos",
+      grid: "",
+      stores: [
+        { name: "Old Navy", url: "https://oldnavy.gap.com/", slogan: "Everyday fashion for everyone" },
+        { name: "Gap", url: "https://www.gap.com/", slogan: "Dress normal" }
+      ]
+    },
+    {
+      title: "Departamentales & Estilo",
+      grid: "",
+      stores: [
+        { name: "Siman CR", url: "https://www.siman.com/", slogan: "Todo para tu estilo de vida" },
+        { name: "Tienda Ekono", url: "https://www.tiendaekono.com/", slogan: "Tu tienda de todos los días" }
+      ]
+    }
+  ];
+
+  const QUOTES = [
+    "La elegancia nunca grita; se impone con calma.",
+    "Viste lo que quieres decir antes de decir algo.",
+    "Un buen básico es el mejor lenguaje de la moda.",
+    "La moda pasa; el estilo permanece.",
+    "Menos ruido, más carácter.",
+    "Cada prenda cuenta una historia: elige la tuya.",
+    "La sencillez es la máxima sofisticación.",
+    "Tu armario es el mapa de la vida que llevas.",
+    "Invierte en lo que dure más que una temporada.",
+    "El estilo empieza cuando dejas de seguir la prisa.",
+    "Vístete para la persona en la que te estás convirtiendo.",
+    "Lo auténtico siempre queda bien, en cualquier temporada."
+  ];
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Ticker ---------- */
+  function buildTicker() {
+    const track = document.getElementById("track");
+    const items = TICKER.map(t => `<span class="tick-item">${t}<i class="sep">◆</i></span>`).join("");
+    track.innerHTML = `<div class="group">${items}</div><div class="group" aria-hidden="true">${items}</div>`;
+  }
+
+  /* ---------- Secciones y tarjetas ---------- */
+  function buildSections() {
+    const main = document.getElementById("main");
+    const romans = ["I", "II", "III", "IV", "V"];
+    main.innerHTML = SECTIONS.map((sec, i) => {
+      const cards = sec.stores.map(s => `
+        <a class="card ripple-host" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.name}">
+          <span class="name">${s.name}</span>
+          <span class="slogan">${s.slogan}</span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>`).join("");
+      return `
+        <section class="reveal d${Math.min(i + 1, 3)}">
+          <div class="section-head">
+            <span class="section-num">${romans[i] || i + 1}</span>
+            <h2>${sec.title}</h2>
+          </div>
+          <div class="grid ${sec.grid}">${cards}</div>
+        </section>`;
+    }).join("");
+  }
+
+  /* ---------- Frase del día ---------- */
+  function buildQuote() {
+    const start = new Date(new Date().getFullYear(), 0, 0);
+    const day = Math.floor((new Date() - start) / 86400000);
+    document.getElementById("quoteText").textContent = QUOTES[day % QUOTES.length];
+  }
+
+  /* ---------- Reloj analógico ---------- */
+  function buildClock() {
+    const c = document.getElementById("clock");
+    let marks = "";
+    for (let i = 0; i < 60; i++) {
+      const major = i % 5 === 0;
+      const len = major ? 9 : 4;
+      const w = major ? 1.4 : 0.6;
+      const op = major ? 0.85 : 0.35;
+      marks += `<line x1="100" y1="${6}" x2="100" y2="${6 + len}" stroke="#141413" stroke-width="${w}" opacity="${op}" transform="rotate(${i * 6} 100 100)"/>`;
+    }
+    c.innerHTML = `
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="100" cy="100" r="97" fill="#FDFCFA" stroke="#141413" stroke-width="0.8" opacity="0.9"/>
+        <circle cx="100" cy="100" r="88" fill="none" stroke="#141413" stroke-width="0.4" opacity="0.25"/>
+        ${marks}
+        <g>
+          <line x1="100" y1="112" x2="100" y2="56" stroke="#141413" stroke-width="3.6" stroke-linecap="round"/>
+        </g>
+        <g>
+          <line x1="100" y1="116" x2="100" y2="34" stroke="#141413" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <g>
+          <line x1="100" y1="124" x2="100" y2="28" stroke="#A38B5E" stroke-width="0.9" stroke-linecap="round"/>
+          <circle cx="100" cy="100" r="3" fill="#A38B5E"/>
+        </g>
+        <circle cx="100" cy="100" r="1.6" fill="#141413"/>
+      </svg>`;
+
+    const groups = c.querySelectorAll("g");
+    const hour = groups[0], minute = groups[1], second = groups[2];
+
+    function update() {
+      const d = new Date();
+      const s = d.getSeconds() + d.getMilliseconds() / 1000;
+      const m = d.getMinutes() + s / 60;
+      const h = (d.getHours() % 12) + m / 60;
+      hour.setAttribute("transform", `rotate(${h * 30} 100 100)`);
+      minute.setAttribute("transform", `rotate(${m * 6} 100 100)`);
+      second.setAttribute("transform", `rotate(${s * 6} 100 100)`);
+      requestAnimationFrame(update);
+    }
+    update();
+  }
+
+  /* ---------- Efecto ripple ---------- */
+  function setupRipple() {
+    document.addEventListener("pointerdown", e => {
+      if (prefersReduced) return;
+      const host = e.target.closest(".ripple-host");
+      if (!host) return;
+      const r = host.getBoundingClientRect();
+      const size = Math.max(r.width, r.height) * 2;
+      const span = document.createElement("span");
+      span.className = "ripple";
+      span.style.width = span.style.height = size + "px";
+      span.style.left = (e.clientX - r.left - size / 2) + "px";
+      span.style.top = (e.clientY - r.top - size / 2) + "px";
+      host.appendChild(span);
+      span.addEventListener("animationend", () => span.remove());
+    });
+  }
+
+  /* ---------- Dot de seguimiento (solo con puntero fino, nunca en táctil) ---------- */
+  function setupDot() {
+    const canFollow = window.matchMedia("(hover: hover) and (pointer: fine)").matches && !prefersReduced;
+    if (!canFollow) return;
+
+    const dot = document.getElementById("dot");
+    document.body.classList.add("has-dot");
+
+    let tx = -100, ty = -100, x = -100, y = -100;
+
+    window.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      tx = e.clientX;
+      ty = e.clientY;
+      dot.style.opacity = "1";
+    }, { passive: true });
+
+    document.addEventListener("pointerout", e => {
+      if (!e.relatedTarget) dot.style.opacity = "0";
+    });
+
+    document.addEventListener("pointerover", e => {
+      dot.classList.toggle("is-active", !!e.target.closest("a, button"));
+    });
+
+    function follow() {
+      x += (tx - x) * 0.2;
+      y += (ty - y) * 0.2;
+      dot.style.transform = `translate3d(${x - 4}px, ${y - 4}px, 0)`;
+      requestAnimationFrame(follow);
+    }
+    follow();
+  }
+
+  /* ---------- Inicio ---------- */
+  buildTicker();
+  buildSections();
+  buildQuote();
+  buildClock();
+  setupRipple();
+  setupDot();
+</script>
+</body>
+  </html>
