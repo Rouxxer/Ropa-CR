@@ -59,7 +59,9 @@
     width: max-content;
     animation: tick 70s linear infinite;
   }
-  .ticker:hover .track { animation-play-state: paused; }
+  @media (hover: hover) {
+    .ticker:hover .track { animation-play-state: paused; }
+  }
   .group { display: flex; flex-shrink: 0; }
   .tick-item {
     font-size: 0.68rem;
@@ -214,7 +216,9 @@
     background: var(--white-broken);
     color: var(--charcoal);
     text-decoration: none;
+    min-width: 0;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     transition: background-color 0.45s var(--ease), color 0.45s var(--ease), transform 0.25s var(--ease);
     isolation: isolate;
   }
@@ -466,7 +470,7 @@
       const len = major ? 9 : 4;
       const w = major ? 1.4 : 0.6;
       const op = major ? 0.85 : 0.35;
-      marks += `<line x1="100" y1="${6}" x2="100" y2="${6 + len}" stroke="#141413" stroke-width="${w}" opacity="${op}" transform="rotate(${i * 6} 100 100)"/>`;
+      marks += `<line x1="100" y1="6" x2="100" y2="${6 + len}" stroke="#141413" stroke-width="${w}" opacity="${op}" transform="rotate(${i * 6} 100 100)"/>`;
     }
     c.innerHTML = `
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -563,199 +567,4 @@
   setupDot();
 </script>
 </body>
-</html> clásicos: la inversión que más dura",
-    "Compara tallas, materiales y envíos a Costa Rica",
-    "Departamentales: ofertas y marcas en un solo lugar"
-  ];
-
-  const SECTIONS = [
-    {
-      title: "Fast Fashion & Tendencias",
-      grid: "grid-3",
-      stores: [
-        { name: "Zara CR", url: "https://www.zara.com/cr/es/", slogan: "Inspired by you" },
-        { name: "Pull&Bear CR", url: "https://www.pullandbear.com/cr/", slogan: "Dare to be" },
-        { name: "Bershka CR", url: "https://www.bershka.com/cr/", slogan: "Be Bershka" },
-        { name: "Stradivarius CR", url: "https://www.stradivarius.com/cr/", slogan: "Dress your mood" },
-        { name: "H&M CR", url: "https://www2.hm.com/es_cr/", slogan: "Fashion and quality at the best price" },
-        { name: "Mango CR", url: "https://shop.mango.com/cr/", slogan: "Mango, moda para ti" }
-      ]
-    },
-    {
-      title: "Básicos & Clásicos",
-      grid: "",
-      stores: [
-        { name: "Old Navy", url: "https://oldnavy.gap.com/", slogan: "Everyday fashion for everyone" },
-        { name: "Gap", url: "https://www.gap.com/", slogan: "Dress normal" }
-      ]
-    },
-    {
-      title: "Departamentales & Estilo",
-      grid: "",
-      stores: [
-        { name: "Siman CR", url: "https://www.siman.com/", slogan: "Todo para tu estilo de vida" },
-        { name: "Tienda Ekono", url: "https://www.tiendaekono.com/", slogan: "Tu tienda de todos los días" }
-      ]
-    }
-  ];
-
-  const QUOTES = [
-    "La elegancia nunca grita; se impone con calma.",
-    "Viste lo que quieres decir antes de decir algo.",
-    "Un buen básico es el mejor lenguaje de la moda.",
-    "La moda pasa; el estilo permanece.",
-    "Menos ruido, más carácter.",
-    "Cada prenda cuenta una historia: elige la tuya.",
-    "La sencillez es la máxima sofisticación.",
-    "Tu armario es el mapa de la vida que llevas.",
-    "Invierte en lo que dure más que una temporada.",
-    "El estilo empieza cuando dejas de seguir la prisa.",
-    "Vístete para la persona en la que te estás convirtiendo.",
-    "Lo auténtico siempre queda bien, en cualquier temporada."
-  ];
-
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- Ticker ---------- */
-  function buildTicker() {
-    const track = document.getElementById("track");
-    const items = TICKER.map(t => `<span class="tick-item">${t}<i class="sep">◆</i></span>`).join("");
-    track.innerHTML = `<div class="group">${items}</div><div class="group" aria-hidden="true">${items}</div>`;
-  }
-
-  /* ---------- Secciones y tarjetas ---------- */
-  function buildSections() {
-    const main = document.getElementById("main");
-    const romans = ["I", "II", "III", "IV", "V"];
-    main.innerHTML = SECTIONS.map((sec, i) => {
-      const cards = sec.stores.map(s => `
-        <a class="card ripple-host" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.name}">
-          <span class="name">${s.name}</span>
-          <span class="slogan">${s.slogan}</span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>`).join("");
-      return `
-        <section class="reveal d${Math.min(i + 1, 3)}">
-          <div class="section-head">
-            <span class="section-num">${romans[i] || i + 1}</span>
-            <h2>${sec.title}</h2>
-          </div>
-          <div class="grid ${sec.grid}">${cards}</div>
-        </section>`;
-    }).join("");
-  }
-
-  /* ---------- Frase del día ---------- */
-  function buildQuote() {
-    const start = new Date(new Date().getFullYear(), 0, 0);
-    const day = Math.floor((new Date() - start) / 86400000);
-    document.getElementById("quoteText").textContent = QUOTES[day % QUOTES.length];
-  }
-
-  /* ---------- Reloj analógico ---------- */
-  function buildClock() {
-    const c = document.getElementById("clock");
-    let marks = "";
-    for (let i = 0; i < 60; i++) {
-      const major = i % 5 === 0;
-      const len = major ? 9 : 4;
-      const w = major ? 1.4 : 0.6;
-      const op = major ? 0.85 : 0.35;
-      marks += `<line x1="100" y1="${6}" x2="100" y2="${6 + len}" stroke="#141413" stroke-width="${w}" opacity="${op}" transform="rotate(${i * 6} 100 100)"/>`;
-    }
-    c.innerHTML = `
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="100" cy="100" r="97" fill="#FDFCFA" stroke="#141413" stroke-width="0.8" opacity="0.9"/>
-        <circle cx="100" cy="100" r="88" fill="none" stroke="#141413" stroke-width="0.4" opacity="0.25"/>
-        ${marks}
-        <g>
-          <line x1="100" y1="112" x2="100" y2="56" stroke="#141413" stroke-width="3.6" stroke-linecap="round"/>
-        </g>
-        <g>
-          <line x1="100" y1="116" x2="100" y2="34" stroke="#141413" stroke-width="2.2" stroke-linecap="round"/>
-        </g>
-        <g>
-          <line x1="100" y1="124" x2="100" y2="28" stroke="#A38B5E" stroke-width="0.9" stroke-linecap="round"/>
-          <circle cx="100" cy="100" r="3" fill="#A38B5E"/>
-        </g>
-        <circle cx="100" cy="100" r="1.6" fill="#141413"/>
-      </svg>`;
-
-    const groups = c.querySelectorAll("g");
-    const hour = groups[0], minute = groups[1], second = groups[2];
-
-    function update() {
-      const d = new Date();
-      const s = d.getSeconds() + d.getMilliseconds() / 1000;
-      const m = d.getMinutes() + s / 60;
-      const h = (d.getHours() % 12) + m / 60;
-      hour.setAttribute("transform", `rotate(${h * 30} 100 100)`);
-      minute.setAttribute("transform", `rotate(${m * 6} 100 100)`);
-      second.setAttribute("transform", `rotate(${s * 6} 100 100)`);
-      requestAnimationFrame(update);
-    }
-    update();
-  }
-
-  /* ---------- Efecto ripple ---------- */
-  function setupRipple() {
-    document.addEventListener("pointerdown", e => {
-      if (prefersReduced) return;
-      const host = e.target.closest(".ripple-host");
-      if (!host) return;
-      const r = host.getBoundingClientRect();
-      const size = Math.max(r.width, r.height) * 2;
-      const span = document.createElement("span");
-      span.className = "ripple";
-      span.style.width = span.style.height = size + "px";
-      span.style.left = (e.clientX - r.left - size / 2) + "px";
-      span.style.top = (e.clientY - r.top - size / 2) + "px";
-      host.appendChild(span);
-      span.addEventListener("animationend", () => span.remove());
-    });
-  }
-
-  /* ---------- Dot de seguimiento (solo con puntero fino, nunca en táctil) ---------- */
-  function setupDot() {
-    const canFollow = window.matchMedia("(hover: hover) and (pointer: fine)").matches && !prefersReduced;
-    if (!canFollow) return;
-
-    const dot = document.getElementById("dot");
-    document.body.classList.add("has-dot");
-
-    let tx = -100, ty = -100, x = -100, y = -100;
-
-    window.addEventListener("pointermove", e => {
-      if (e.pointerType !== "mouse") return;
-      tx = e.clientX;
-      ty = e.clientY;
-      dot.style.opacity = "1";
-    }, { passive: true });
-
-    document.addEventListener("pointerout", e => {
-      if (!e.relatedTarget) dot.style.opacity = "0";
-    });
-
-    document.addEventListener("pointerover", e => {
-      dot.classList.toggle("is-active", !!e.target.closest("a, button"));
-    });
-
-    function follow() {
-      x += (tx - x) * 0.2;
-      y += (ty - y) * 0.2;
-      dot.style.transform = `translate3d(${x - 4}px, ${y - 4}px, 0)`;
-      requestAnimationFrame(follow);
-    }
-    follow();
-  }
-
-  /* ---------- Inicio ---------- */
-  buildTicker();
-  buildSections();
-  buildQuote();
-  buildClock();
-  setupRipple();
-  setupDot();
-</script>
-</body>
-  </html>
+</html>
